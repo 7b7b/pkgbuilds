@@ -1,0 +1,26 @@
+pkgname=volume-mixer-applet
+pkgver=0.7.2
+pkgrel=2
+pkgdesc="A simple mixer application designed to run in your system tray."
+arch=('i686' 'x86_64')
+license=('GPL')
+url="https://github.com/nicklan/pnmixer"
+depends=('gtk3' 'alsa-lib' 'libx11')
+makedepends=('cmake' 'pkg-config')
+
+source=("$pkgname::git+https://github.com/git-fal7/volume-mixer-applet")
+sha256sums=('SKIP')
+
+build() {
+  cd $pkgname
+  cmake \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release
+  make
+}
+
+package() {
+  cd $pkgname
+
+  make DESTDIR="$pkgdir" install
+}
